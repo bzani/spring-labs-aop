@@ -20,8 +20,10 @@ public class TicketAspect {
 	
 	@After(value = "@annotation(ticket)", argNames = "ticket")
 	public void createTicket(JoinPoint joinPoint, Ticket ticket) throws Throwable {
-		if (joinPoint.getArgs() == null || joinPoint.getArgs().length == 0) 
+		if (joinPoint.getArgs() == null || joinPoint.getArgs().length == 0) { 
+			log.warn("No args were passed");
 			return;
+		}
 		
 		try {
 			long entityId = Long.parseLong(joinPoint.getArgs()[0].toString());
